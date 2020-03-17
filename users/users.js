@@ -24,7 +24,7 @@ router.post('/registeruser', (req, res) => {
                 console.log(error, success)
                 if (!error & success != null) {
                     let _id = success._id;
-                    let link = 'https://api.xupermax.com/apis/users/verifyuser?_id=' + _id;
+                    let link = 'http://52.90.246.238:5000/apis/users/verifyuser?_id=' + _id;
                     sendEmail('Xupermax', email, 'Verification Link', link, null);
                     res.status(200).json({
                         error: true,
@@ -93,7 +93,7 @@ router.post('/sendverificationlink', function (req, res) {
     users.findOne({ email: user_id }, function (error, success) {
         if (!error & success != null) {
             let _id = success._id;
-            let link = 'https://api.xupermax.com/apis/users/verifyuser?_id=' + _id;
+            let link = 'http://52.90.246.238:5000/apis/users/verifyuser?_id=' + _id;
             sendEmail('Xupermax', user_id, 'Verification Link', link, null)
             res.status(200).json({
                 error: false,
@@ -172,7 +172,7 @@ router.post('/reject', function (req, res) {
     users.findOneAndUpdate({ _id: user_id }, { $set: { status: 'rejected' } }, function (error, success) {
         if (!error & success != null) {
             let email = success.email;
-            sendEmail('Xupermax', email, 'Request Rejected', 'Your request has been rejected. Please contact admin', null);
+            sendEmail('Xupermax-Admin', email, 'Request Rejected', 'Your request has been rejected. Please contact admin', null);
             res.status(200).json({
                 error: false,
                 message: 'Request has been rejected',

@@ -71,7 +71,7 @@ router.post('/login', function (req, res) {
                     })
                 } else {
                     res.status(200).json({
-                        error: false,
+                        error: true,
                         message: 'Your account is pending approval.',
                         data: success
                     })
@@ -172,7 +172,7 @@ router.post('/reject', function (req, res) {
     users.findOneAndUpdate({ _id: user_id }, { $set: { status: 'rejected' } }, function (error, success) {
         if (!error & success != null) {
             let email = success.email;
-            sendEmail('Xupermax-Admin', email, 'Request Rejected', 'Your request has been rejected. Please contact admin', null);
+            sendEmail('Xupermax', email, 'Request Rejected', 'Your request has been rejected. Please contact admin', null);
             res.status(200).json({
                 error: false,
                 message: 'Request has been rejected',

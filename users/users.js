@@ -57,11 +57,25 @@ router.post('/login', function (req, res) {
                     data: success
                 })
             } else {
-                res.status(200).json({
-                    error: false,
-                    message: 'User logged in successfully',
-                    data: success
-                })
+                if (success.status == 'accepted') {
+                    res.status(200).json({
+                        error: false,
+                        message: 'User logged in successfully',
+                        data: success
+                    })
+                } else if (success.status == 'rejected') {
+                    res.status(200).json({
+                        error: true,
+                        message: 'Your account request has been rejected by admin',
+                        data: success
+                    })
+                } else {
+                    res.status(200).json({
+                        error: false,
+                        message: 'Your account is pending approval.',
+                        data: success
+                    })
+                }
             }
         } else {
             res.status(200).json({
@@ -107,6 +121,68 @@ router.get('/verifyuser', function (req, res) {
         } else {
             res.status(200).json({
                 error: true
+            })
+        }
+    })
+})
+
+
+router.get('/requests', function (req, res) {
+    users.find({ status: 'pending', verified: true }, function (error, success) {
+        if (!error && success != null) {
+            res.status(200).json({
+                error: false,
+                message: 'Users requests list got successful',
+                data: success
+            })
+        } else {
+            res.status(200).json({
+                error: true,
+                message: 'Can not get users request list',
+                data: error
+            })
+        }
+    })
+})
+
+
+router.post('/accept', function (req, res) {
+    let user_id = req.query._id;
+    users.findOneAndUpdate({ _id: user_id }, { $set: { status: 'accepted' } }, function (error, success) {
+        if (!error & success != null) {
+            let email = success.email;
+            sendEmail('Xupermax', email, 'Request Accepted', 'Your request has been accepted. Please login', null);
+            res.status(200).json({
+                error: false,
+                message: 'Request has been accepted',
+                data: success
+            })
+        } else {
+            res.status(200).json({
+                error: true,
+                message: 'Error accepting the request',
+                data: error
+            })
+        }
+    })
+})
+
+router.post('/reject', function (req, res) {
+    let user_id = req.query._id;
+    users.findOneAndUpdate({ _id: user_id }, { $set: { status: 'rejected' } }, function (error, success) {
+        if (!error & success != null) {
+            let email = success.email;
+            sendEmail('Xupermax-Admin', email, 'Request Rejected', 'Your request has been rejected. Please contact admin', null);
+            res.status(200).json({
+                error: false,
+                message: 'Request has been rejected',
+                data: success
+            })
+        } else {
+            res.status(200).json({
+                error: true,
+                message: 'Error accepting the request',
+                data: error
             })
         }
     })

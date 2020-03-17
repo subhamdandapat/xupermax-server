@@ -48,6 +48,11 @@ const users = mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
+    },
+    status:{
+        type:String,
+        default: 'pending',
+        enum:['pending','accepted','rejected']
     }
 });
 

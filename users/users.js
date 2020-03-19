@@ -188,6 +188,32 @@ router.post('/reject', function (req, res) {
     })
 })
 
+
+/**
+ * 
+ * API to get organization profile
+ * 
+ * **/
+
+router.get('/profile', function (req, res) {
+    let user_id = req.query._id;
+    users.findOne({ _id: user_id }, function (error, success) {
+        if (!error && success != null) {
+            req.status(200).json({
+                error: false,
+                message: 'Organization profile got successfully',
+                data: success
+            })
+        } else {
+            req.status(200).json({
+                error: true,
+                message: 'Can not get organization profile',
+                data: error
+            })
+        }
+    })
+})
+
 function sendEmail(from, to, subject, text, html) {
     return new Promise(function (resolve, reject) {
         let transporter = nodemailer.createTransport({

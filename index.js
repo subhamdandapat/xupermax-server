@@ -28,3 +28,6 @@ server.listen(port, () => {
 
 const userroute = require('./users/users')
 app.use(apipath + '/users', userroute)
+
+const fileroute = require('./image/image')
+app.use(apipath + '/file', fileroute)

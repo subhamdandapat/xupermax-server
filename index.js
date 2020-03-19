@@ -30,4 +30,7 @@ const userroute = require('./users/users')
 app.use(apipath + '/users', userroute)
 
 const fileroute = require('./image/image')
-app.use(apipath + '/file', fileroute)
+app.use(apipath + '/files', fileroute)
+
+const contactroute = require('./contacts/contacts')
+app.use(apipath + '/contacts', contactroute)

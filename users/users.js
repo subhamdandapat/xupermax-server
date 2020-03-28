@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 //send OTP
 
 router.get('/checkusername', function (req, res) {
-    let username = req.body.username;
+    let username = req.query.username;
     if (username.length <= 8) {
         res.status(200).json({
             error: true,

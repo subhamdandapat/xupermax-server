@@ -74,9 +74,9 @@ router.post('/registeruser', (req, res) => {
 
 
 router.post('/login', function (req, res) {
-    let email = req.body.email;
+    let username = req.body.username;
     let password = req.body.password;
-    users.findOne({ email: email, password: password }, function (error, success) {
+    users.findOne({ username: username, password: password }, function (error, success) {
         if (!error && success != null) {
             if (success.verified == false) {
                 res.status(200).json({

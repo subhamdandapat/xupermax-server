@@ -6,6 +6,34 @@ const nodemailer = require("nodemailer");
 
 //send OTP
 
+router.get('/checkusername', function (req, res) {
+    let username = req.body.username;
+    if (username.length <= 8) {
+        res.status(200).json({
+            error: true,
+            message: 'Username length can not be less than 9',
+            data: {}
+        })
+    }
+    users.findOne({
+        username: username
+    }, function (error, success) {
+        if (!error && success != null) {
+            res.status(200).json({
+                error: true,
+                message: 'This username already exists',
+                data: success
+            })
+        } else {
+            res.status(200).json({
+                error: false,
+                message: 'This username is available',
+                data: error
+            })
+        }
+    })
+})
+
 router.post('/registeruser', (req, res) => {
     let email = req.body.email;
     console.log(email)

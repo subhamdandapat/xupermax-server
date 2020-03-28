@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const users = mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
     firstName: {
         type: String
     },
@@ -20,9 +24,9 @@ const users = mongoose.Schema({
         type: String,
         unique: true
     },
-    password:{
-        type:String,
-        require:true
+    password: {
+        type: String,
+        require: true
     },
     company: {
         type: String
@@ -49,10 +53,10 @@ const users = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    status:{
-        type:String,
+    status: {
+        type: String,
         default: 'pending',
-        enum:['pending','accepted','rejected']
+        enum: ['pending', 'accepted', 'rejected']
     }
 });
 

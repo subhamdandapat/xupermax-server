@@ -34,3 +34,9 @@ app.use(apipath + '/files', fileroute)
 
 const contactroute = require('./contacts/contacts')
 app.use(apipath + '/contacts', contactroute)
+
+const studentRoute = require('./student/studentRoute')
+app.use(apipath + '/student', studentRoute)
+
+const teacherRoute = require('./teacher/teacherRoute')
+app.use(apipath + '/teacher', teacherRoute)

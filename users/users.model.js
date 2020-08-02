@@ -31,6 +31,9 @@ const users = mongoose.Schema({
     company: {
         type: String
     },
+    institute: {
+        type: String
+    },
     address: {
         type: String
     },
@@ -52,6 +55,10 @@ const users = mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
+    },
+    role:{
+        default: 'institute',
+        type: String
     },
     status: {
         type: String,
